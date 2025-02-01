@@ -5,9 +5,11 @@ import 'package:task_manager/data/models/login_model.dart';
 
 class AuthUtility {
   AuthUtility._();
+  static LoginModel userinfo = LoginModel();
   static Future<void> saveUserInfo(LoginModel model) async {
     SharedPreferences sharedprefs = await SharedPreferences.getInstance();
-    sharedprefs.setString('user-data', model.toJson().toString());
+    sharedprefs.setString('user-data', jsonEncode(model.toJson()));
+    userinfo = model;
   }
 
   static Future<LoginModel> getUserInfo() async {
@@ -24,6 +26,10 @@ class AuthUtility {
 
   static Future<bool> checkifUserLoggedIn() async {
     SharedPreferences sharedprefs = await SharedPreferences.getInstance();
-    return sharedprefs.containsKey('user-data');
+    bool Loggedin = sharedprefs.containsKey('user-data');
+    if (Loggedin) {
+      userinfo = await getUserInfo();
+    }
+    return Loggedin;
   }
 }

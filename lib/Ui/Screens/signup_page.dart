@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';        
+import 'package:flutter/material.dart';
+import 'package:task_manager/Ui/Screens/LoginScreen.dart';
 import 'package:task_manager/Ui/Widgets/screen_background.dart';
 import 'package:task_manager/data/models/network_response.dart';
 import 'package:task_manager/data/services/network_caller.dart';
@@ -180,7 +181,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Already have an account?'),
-                        TextButton(onPressed: () {}, child: Text('Sign In'))
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return LoginScreen();
+                              }));
+                            },
+                            child: Text('Sign In'))
                       ],
                     ),
                   ],
