@@ -1,9 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/Ui/Widgets/screen_background.dart';
 import 'package:task_manager/Ui/Widgets/userBanner.dart';
+import 'package:task_manager/data/models/network_response.dart';
+import 'package:task_manager/data/services/network_caller.dart';
+import 'package:task_manager/data/utils/urls.dart';
 
-class AddNewTask extends StatelessWidget {
+class AddNewTask extends StatefulWidget {
   const AddNewTask({super.key});
+
+  @override
+  State<AddNewTask> createState() => _AddNewTaskState();
+}
+
+class _AddNewTaskState extends State<AddNewTask> {
+  TextEditingController _sbjTEController = TextEditingController();
+  TextEditingController _descTEController = TextEditingController();
+  bool inProgress = false;
+
+  Future<void> addTask() async {
+    setState(() {
+      inProgress = true;
+    });
+    final NetworkResponse response =
+        await NetworkCaller().postRequest(Urls.addTask, <String, dynamic>{
+      "title": _sbjTEController.text.trim(),
+      "description": _descTEController.text.trim(),
+      "status": "New"
+    });
+
+    if (response.isSuccess) {
+      setState(() {});
+      inProgress = false;
+      _sbjTEController.clear();
+      _descTEController.clear();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Task Added Successfully"),
+        ),
+      );
+    } else {
+      inProgress = false;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Task Adding Failed"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +75,7 @@ class AddNewTask extends StatelessWidget {
                       ),
                     ),
                     TextField(
+                      controller: _sbjTEController,
                       decoration: InputDecoration(
                         hintText: 'Subject',
                       ),
@@ -40,6 +84,7 @@ class AddNewTask extends StatelessWidget {
                       height: 20,
                     ),
                     TextField(
+                      controller: _descTEController,
                       maxLines: 10,
                       decoration: InputDecoration(
                         hintText: 'Description',
@@ -51,11 +96,15 @@ class AddNewTask extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(Icons.arrow_right_alt_rounded),
+                      child: Visibility(
+                        visible: inProgress == false,
+                        replacement: Center(child: LinearProgressIndicator()),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            addTask();
+                          },
+                          child: Icon(Icons.arrow_right_alt_rounded),
+                        ),
                       ),
                     )
                   ],
