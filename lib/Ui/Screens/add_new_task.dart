@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/Ui/Widgets/screen_background.dart';
 import 'package:task_manager/Ui/Widgets/userBanner.dart';
 import 'package:task_manager/data/models/network_response.dart';
+
 import 'package:task_manager/data/services/network_caller.dart';
 import 'package:task_manager/data/utils/urls.dart';
 
@@ -102,6 +103,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                         child: ElevatedButton(
                           onPressed: () {
                             addTask();
+                            Navigator.pop(context);
                           },
                           child: Icon(Icons.arrow_right_alt_rounded),
                         ),
