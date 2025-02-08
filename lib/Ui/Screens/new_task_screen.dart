@@ -49,10 +49,10 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   }
 
   Future<void> getNewTask() async {
+    final NetworkResponse response =
+        await NetworkCaller().getRequest(Urls.getNewTask);
     if (mounted) {
       setState(() {});
-      final NetworkResponse response =
-          await NetworkCaller().getRequest(Urls.getNewTask);
       if (response.isSuccess) {
         _taskListModel = TaskListMdoel.fromJson(response.body!);
         // ScaffoldMessenger.of(context)
@@ -95,6 +95,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                   onRefresh: () async {
                     setState(() {});
                     getNewTask();
+                    _getSummaryData();
                     _taskListModel = _taskListModel;
                   },
                   child: ListView.separated(
