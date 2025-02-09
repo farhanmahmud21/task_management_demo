@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/Ui/Screens/add_new_task.dart';
 import 'package:task_manager/Ui/Widgets/screen_background.dart';
 import 'package:task_manager/Ui/Widgets/summaryDataCard.dart';
-import 'package:task_manager/Ui/Widgets/summary_card.dart';
 import 'package:task_manager/Ui/Widgets/task_list_tile.dart';
 import 'package:task_manager/Ui/Widgets/userBanner.dart';
 import 'package:task_manager/data/models/network_response.dart';
@@ -19,9 +18,9 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
-  bool _isLoading = false;
+  bool isLoading = false;
   TaskListMdoel _taskListModel = TaskListMdoel();
-  SummaryCardMdoel _summary_cardModel = SummaryCardMdoel();
+  SummaryCardMdoel _summaryCardModel = SummaryCardMdoel();
 
   @override
   void initState() {
@@ -33,12 +32,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   }
 
   Future<void> _getSummaryData() async {
-    setState(() => _isLoading = true);
+    setState(() => isLoading = true);
     final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.summary_card);
+        await NetworkCaller().getRequest(Urls.summaryCard);
     if (response.isSuccess) {
-      _summary_cardModel = SummaryCardMdoel.fromJson(response.body!);
-      setState(() => _isLoading = false);
+      _summaryCardModel = SummaryCardMdoel.fromJson(response.body!);
+      setState(() => isLoading = false);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -88,7 +87,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             children: [
               UserBanner(),
               SummaryDataCard(
-                data: _summary_cardModel.data ?? [],
+                data: _summaryCardModel.data ?? [],
               ),
               Expanded(
                 child: RefreshIndicator(

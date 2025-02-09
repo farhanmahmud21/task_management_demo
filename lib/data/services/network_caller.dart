@@ -15,11 +15,17 @@ class NetworkCaller {
     try {
       Response response = await get(Uri.parse(url),
           headers: {'token': AuthUtility.userinfo.token.toString()});
+
+      log(response.statusCode.toString());
+      log(response.body);
+
       if (response.statusCode == 200) {
         return NetworkResponse(
             isSuccess: true,
             statusCode: response.statusCode,
             body: jsonDecode(response.body));
+      } else if (response.statusCode == 401) {
+        gotoLogin();
       } else {
         return NetworkResponse(
             isSuccess: false, statusCode: response.statusCode, body: null);
@@ -44,7 +50,7 @@ class NetworkCaller {
 
       log(response.statusCode.toString());
       log(response.body);
-      
+
       if (response.statusCode == 200) {
         return NetworkResponse(
             isSuccess: true,
