@@ -16,11 +16,13 @@ class CancelledTaskpage extends StatefulWidget {
 }
 
 class _CancelledTaskpageState extends State<CancelledTaskpage> {
+  @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _getCancelledTask();
-    });
+    _getCancelledTask();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    // });
   }
 
   TaskListMdoel _cancelledTaskModel = TaskListMdoel();
@@ -35,8 +37,12 @@ class _CancelledTaskpageState extends State<CancelledTaskpage> {
       }
       _cancelledTaskModel = TaskListMdoel.fromJson(_response.body!);
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Successfully Uploded')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Successfully Uploded'),
+        backgroundColor: Colors.green,
+        // duration: Duration(milliseconds: 40),
+        showCloseIcon: true,
+      ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

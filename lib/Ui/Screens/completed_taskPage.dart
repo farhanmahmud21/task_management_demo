@@ -20,9 +20,10 @@ class _CompletedTaskpageState extends State<CompletedTaskpage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getCompletedtask();
-    });
+    getCompletedtask();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    // });
   }
 
   Future<void> getCompletedtask() async {

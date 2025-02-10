@@ -25,10 +25,11 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getNewTask();
-      _getSummaryData();
-    });
+    getNewTask();
+    _getSummaryData();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    // });
   }
 
   Future<void> _getSummaryData() async {
