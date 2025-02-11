@@ -73,6 +73,7 @@ class _CancelledTaskpageState extends State<CancelledTaskpage> {
                       itemCount: _cancelledTaskModel.data?.length ?? 0,
                       itemBuilder: (context, index) {
                         return TaskListTile(
+                            onDelete: () {},
                             data: _cancelledTaskModel.data![index]);
                       }),
                 ),

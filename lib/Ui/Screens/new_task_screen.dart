@@ -64,6 +64,27 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     }
   }
 
+  Future<void> deleteTask(String taskId) async {
+    final NetworkResponse _response =
+        await NetworkCaller().getRequest(Urls.deleteTask(taskId));
+
+    if (_response.isSuccess) {
+      if (mounted) {
+        setState(() {
+          _taskListModel.data!.removeWhere((element) => element.sId == taskId);
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('SuccessFully deleted')));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to delete task'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,13 +120,21 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                     _taskListModel = _taskListModel;
                   },
                   child: ListView.separated(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                        top: 10,
+                        bottom: 80, // Add padding to the bottom
+                      ),
                       separatorBuilder: (context, index) => Divider(),
                       itemCount: _taskListModel.data?.length ?? 0,
                       itemBuilder: (context, index) {
                         return Container(
                             color: const Color.fromARGB(148, 255, 255, 255),
                             child: TaskListTile(
+                              onDelete: () {
+                                deleteTask(_taskListModel.data![index].sId!);
+                              },
                               data: _taskListModel.data![index],
                             ));
                       }),

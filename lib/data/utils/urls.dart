@@ -7,5 +7,6 @@ class Urls {
   static String getCompleteTask = "$_baseUrl/listTaskByStatus/Completed";
   static String getCancelledTask = "$_baseUrl/listTaskByStatus/Cancelled";
   static String getInProgresslink = "$_baseUrl/listTaskByStatus/InProgress";
+  static String deleteTask(String taskId) => "$_baseUrl/deleteTask/$taskId";
   static String summaryCard = "$_baseUrl/taskStatusCount";
 }

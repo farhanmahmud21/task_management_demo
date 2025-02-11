@@ -70,6 +70,7 @@ class _CompletedTaskpageState extends State<CompletedTaskpage> {
                         return Container(
                           color: const Color.fromARGB(148, 255, 255, 255),
                           child: TaskListTile(
+                              onDelete: () {},
                               data: _completedTaskModel.data![index]),
                         );
                       }),

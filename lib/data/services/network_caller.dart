@@ -69,6 +69,7 @@ class NetworkCaller {
   }
 
   void gotoLogin() async {
+    log('Token expired, navigating to login screen');
     await AuthUtility.clearUserInfo();
     Navigator.pushAndRemoveUntil(
         Task_Manager.globalKey.currentContext!,

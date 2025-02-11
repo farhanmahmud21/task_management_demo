@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:task_manager/Ui/Widgets/screen_background.dart';
 import 'package:task_manager/Ui/Widgets/task_list_tile.dart';
 import 'package:task_manager/Ui/Widgets/userBanner.dart';
-import 'package:task_manager/data/models/login_model.dart';
 import 'package:task_manager/data/models/network_response.dart';
 import 'package:task_manager/data/models/task_list_model.dart';
 import 'package:task_manager/data/services/network_caller.dart';
@@ -65,6 +63,7 @@ class _ProgressTaskState extends State<ProgressTask> {
                     itemCount: _inProgressTaskModel.data?.length ?? 0,
                     itemBuilder: (context, index) {
                       return TaskListTile(
+                          onDelete: () {},
                           data: _inProgressTaskModel.data![index]);
                     }),
               )
