@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/Ui/Screens/add_new_task.dart';
+import 'package:task_manager/Ui/Screens/update_task.dart';
 import 'package:task_manager/Ui/Widgets/screen_background.dart';
 import 'package:task_manager/Ui/Widgets/summaryDataCard.dart';
 import 'package:task_manager/Ui/Widgets/task_list_tile.dart';
@@ -132,6 +133,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         return Container(
                             color: const Color.fromARGB(148, 255, 255, 255),
                             child: TaskListTile(
+                              onUpdate: () {
+                                showSheet(context, _taskListModel.data![index]);
+                                _taskListModel = _taskListModel;
+
+                                setState(() {});
+                              },
                               onDelete: () {
                                 deleteTask(_taskListModel.data![index].sId!);
                               },
@@ -147,4 +154,15 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       ),
     );
   }
+}
+
+void showSheet(BuildContext context, TaskData data) {
+  showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Update_task(
+          task: data,
+        );
+      });
 }

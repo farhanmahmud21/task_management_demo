@@ -3,8 +3,13 @@ import 'package:task_manager/data/models/task_list_model.dart';
 
 class TaskListTile extends StatelessWidget {
   final TaskData data;
-  final VoidCallback onDelete;
-  const TaskListTile({super.key, required this.data, required this.onDelete});
+  final VoidCallback? onDelete;
+  final VoidCallback? onUpdate;
+  const TaskListTile(
+      {super.key,
+      required this.data,
+      required this.onDelete,
+      required this.onUpdate});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +29,13 @@ class TaskListTile extends StatelessWidget {
               Spacer(),
               IconButton(
                   color: Colors.green,
-                  onPressed: () {},
+                  onPressed: () {
+                    onUpdate!();
+                  },
                   icon: Icon(Icons.document_scanner)),
               IconButton(
                   color: Colors.red,
-                  onPressed: () => {onDelete()},
+                  onPressed: () => {onDelete!()},
                   icon: Icon(Icons.delete)),
             ],
           ),

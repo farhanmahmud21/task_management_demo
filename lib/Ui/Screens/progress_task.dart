@@ -63,6 +63,7 @@ class _ProgressTaskState extends State<ProgressTask> {
                     itemCount: _inProgressTaskModel.data?.length ?? 0,
                     itemBuilder: (context, index) {
                       return TaskListTile(
+                          onUpdate: null,
                           onDelete: () {},
                           data: _inProgressTaskModel.data![index]);
                     }),
